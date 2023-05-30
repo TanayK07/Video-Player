@@ -16,7 +16,8 @@
     "react-dom": "^18.2.0",
     "react-native": "0.71.8",
     "react-native-web": "~0.18.11",
-    "react-native-webview": "^12.1.0"
+    "react-native-webview": "^12.1.0",
+    "react-native-youtube": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

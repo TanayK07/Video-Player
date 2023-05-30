@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
 import { WebView } from 'react-native-webview';
 import * as Font from 'expo-font';
 
-const API_KEY = 'YOUR_YOUTUBE_API_KEY';
+
+const API_KEY = 'AIzaSyDyBxAOgl3Lv3k1ITNAwTegHMlfp9OIRZc';
 const videoLinks = [
   {
     videoId: '2GrAVlJ7Cdo',
@@ -41,7 +42,7 @@ class App extends React.Component {
           .join(',')}&key=${API_KEY}`
       );
       const json = await response.json();
-      const videoTitles = json.items.map(item => item.snippet.title);
+      const videoTitles = json.items.map((item) => item.snippet.title);
       this.setState({ videoTitles });
     } catch (error) {
       console.error('Error fetching video titles:', error);
@@ -59,17 +60,15 @@ class App extends React.Component {
           onPress={() => this.setState({ selectedVideoLink: videoId })}
         >
           <Text style={styles.videoTitle}>{videoTitle}</Text>
-          <View style={styles.videoPlayerContainer}>
-            <WebView
-              style={styles.videoPlayer}
-              source={{ uri: `https://www.youtube.com/embed/${videoId}` }}
-            />
-          </View>
+          <WebView
+            style={styles.videoPlayer}
+            source={{ uri: `https://www.youtube.com/embed/${videoId}` }}
+          />
         </TouchableOpacity>
       );
     });
   }
-  
+
   render() {
     const { selectedVideoLink, fontsLoaded } = this.state;
 
@@ -86,13 +85,13 @@ class App extends React.Component {
           />
           <Text style={styles.heading}>BookLine</Text>
         </View>
-        <ScrollView contentContainerStyle={styles.videoList}>
-          {this.renderVideoList()}
-        </ScrollView>
+        <View style={styles.videoList}>{this.renderVideoList()}</View>
         {selectedVideoLink ? (
           <WebView
             style={styles.selectedVideoPlayer}
-            source={{ uri: `https://www.youtube.com/embed/${selectedVideoLink}` }}
+            source={{
+              uri: `https://www.youtube.com/embed/${selectedVideoLink}`,
+            }}
           />
         ) : (
           <Text style={styles.placeholderText}>Select a video to play</Text>
@@ -131,22 +130,23 @@ const styles = StyleSheet.create({
   },
   videoItem: {
     marginBottom: 20,
+    backgroundColor: '#ffbcbd',
+    borderRadius: 8,
+    padding: 10,
+    alignItems: 'center',
   },
   videoTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#333333',
-  },
-  videoPlayerContainer: {
-    borderWidth: 1,
-    borderColor: '#CCCCCC',
-    borderRadius: 5,
-    overflow: 'hidden',
-    aspectRatio: 16 / 9,
+    color: '#74464d',
+    textAlign: 'center',
   },
   videoPlayer: {
     width: '100%',
+    aspectRatio: 16 / 9,
+    maxWidth: 300,
+    maxHeight: 200,
   },
   selectedVideoPlayer: {
     flex: 1,
