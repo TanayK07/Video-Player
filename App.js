@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
 import { WebView } from 'react-native-webview';
 import * as Font from 'expo-font';
 
-const API_KEY = 'AIzaSyDyBxAOgl3Lv3k1ITNAwTegHMlfp9OIRZc';
+const API_KEY = 'YOUR_YOUTUBE_API_KEY';
 const videoLinks = [
   {
     videoId: '2GrAVlJ7Cdo',
@@ -59,10 +59,12 @@ class App extends React.Component {
           onPress={() => this.setState({ selectedVideoLink: videoId })}
         >
           <Text style={styles.videoTitle}>{videoTitle}</Text>
-          <WebView
-            style={styles.videoPlayer}
-            source={{ uri: `https://www.youtube.com/embed/${videoId}` }}
-          />
+          <View style={styles.videoPlayerContainer}>
+            <WebView
+              style={styles.videoPlayer}
+              source={{ uri: `https://www.youtube.com/embed/${videoId}` }}
+            />
+          </View>
         </TouchableOpacity>
       );
     });
@@ -84,7 +86,9 @@ class App extends React.Component {
           />
           <Text style={styles.heading}>BookLine</Text>
         </View>
-        <View style={styles.videoList}>{this.renderVideoList()}</View>
+        <ScrollView contentContainerStyle={styles.videoList}>
+          {this.renderVideoList()}
+        </ScrollView>
         {selectedVideoLink ? (
           <WebView
             style={styles.selectedVideoPlayer}
@@ -125,7 +129,6 @@ const styles = StyleSheet.create({
   videoList: {
     padding: 20,
   },
-  
   videoItem: {
     marginBottom: 20,
   },
@@ -142,18 +145,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     aspectRatio: 16 / 9,
   },
-  videoTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333333',
-  },
   videoPlayer: {
-    width: '80%',
-    height :'10%',
-    aspectRatio: 16 / 9,
-    maxWidth: 300,
-    maxHeight: 200,
+    width: '100%',
   },
   selectedVideoPlayer: {
     flex: 1,
